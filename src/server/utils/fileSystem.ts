@@ -1,6 +1,11 @@
 import fs from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
+import os from "os";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Validates that a file path is safe and doesn't contain path traversal attempts
@@ -8,21 +13,32 @@ import path from "path";
  * @throws Error if the path contains suspicious patterns
  */
 function validateFilePath(filePath: string): void {
+  // Ensure the path doesn't contain null bytes
+  if (filePath.includes("\0")) {
+    throw new Error("Invalid file path: null byte detected");
+  }
+
   // Normalize the path to resolve any .. or . segments
   const normalizedPath = path.normalize(filePath);
+  const resolvedPath = path.resolve(normalizedPath);
 
-  // Check for path traversal attempts
+  // Check for path traversal attempts in normalized path
   if (normalizedPath.includes("..")) {
     throw new Error("Invalid file path: path traversal detected");
   }
 
-  // Check for absolute paths that might escape intended directory
-  // Allow only certain base directories for config files
-  const resolvedPath = path.resolve(normalizedPath);
+  // Verify the resolved path is within allowed directories
+  const homeDir = os.homedir();
+  const appDir = path.resolve(__dirname, "../..");
 
-  // Ensure the path doesn't contain null bytes
-  if (filePath.includes("\0")) {
-    throw new Error("Invalid file path: null byte detected");
+  // Allow paths within home directory or application directory
+  const isInHomeDir = resolvedPath.startsWith(homeDir);
+  const isInAppDir = resolvedPath.startsWith(appDir);
+
+  if (!isInHomeDir && !isInAppDir) {
+    throw new Error(
+      "Invalid file path: must be within home or application directory",
+    );
   }
 }
 
@@ -56,11 +72,50 @@ export async function readJsonFile<T>(filePath: string): Promise<T> {
   return JSON.parse(content);
 }
 
+/**
+ * Validates data before writing to file system
+ * @param data - Data to validate
+ * @throws Error if data is invalid or potentially malicious
+ */
+function validateWriteData<T>(data: T): void {
+  // Ensure data is not null or undefined
+  if (data === null || data === undefined) {
+    throw new Error("Invalid data: cannot write null or undefined");
+  }
+
+  // Serialize to check for valid JSON and measure size
+  const content = JSON.stringify(data, null, 2);
+
+  // Limit file size to 10MB to prevent DoS
+  const maxSize = 10 * 1024 * 1024;
+  if (Buffer.byteLength(content, "utf-8") > maxSize) {
+    throw new Error("Invalid data: exceeds maximum file size (10MB)");
+  }
+
+  // Check for potentially dangerous patterns
+  // This helps prevent injection attacks through config files
+  if (typeof content === "string") {
+    const dangerousPatterns = [
+      /\x00/g, // Null bytes
+      /<script/gi, // Script tags
+      /javascript:/gi, // JavaScript protocol
+    ];
+
+    for (const pattern of dangerousPatterns) {
+      if (pattern.test(content)) {
+        throw new Error("Invalid data: contains potentially dangerous content");
+      }
+    }
+  }
+}
+
 export async function writeJsonFile<T>(
   filePath: string,
   data: T,
 ): Promise<void> {
   validateFilePath(filePath);
+  validateWriteData(data);
+
   const dirPath = path.dirname(filePath);
   await ensureDirectory(dirPath);
 

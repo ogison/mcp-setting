@@ -35,6 +35,15 @@ export function createApp(): Application {
     legacyHeaders: false,
   });
 
+  // Rate limiting for static files and HTML
+  const staticLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 500, // Limit each IP to 500 static requests per windowMs
+    message: "Too many requests from this IP, please try again later.",
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+
   app.use("/api", apiLimiter);
   app.use("/api/config", writeLimiter);
   app.use("/api", configRoutes);
@@ -43,7 +52,7 @@ export function createApp(): Application {
   const clientPath = path.join(__dirname, "../client");
   app.use(express.static(clientPath));
 
-  app.get("*", (_req: Request, res: Response) => {
+  app.get("*", staticLimiter, (_req: Request, res: Response) => {
     res.sendFile(path.join(clientPath, "index.html"));
   });
 
