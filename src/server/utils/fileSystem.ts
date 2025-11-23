@@ -2,10 +2,6 @@ import fs from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
 import os from "os";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 /**
  * Validates that a file path is safe and doesn't contain path traversal attempts
@@ -29,15 +25,15 @@ function validateFilePath(filePath: string): void {
 
   // Verify the resolved path is within allowed directories
   const homeDir = os.homedir();
-  const appDir = path.resolve(__dirname, "../..");
+  const cwd = process.cwd();
 
-  // Allow paths within home directory or application directory
+  // Allow paths within home directory or current working directory
   const isInHomeDir = resolvedPath.startsWith(homeDir);
-  const isInAppDir = resolvedPath.startsWith(appDir);
+  const isInCwd = resolvedPath.startsWith(cwd);
 
-  if (!isInHomeDir && !isInAppDir) {
+  if (!isInHomeDir && !isInCwd) {
     throw new Error(
-      "Invalid file path: must be within home or application directory",
+      "Invalid file path: must be within home or working directory",
     );
   }
 }
