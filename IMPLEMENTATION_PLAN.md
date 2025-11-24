@@ -1,6 +1,6 @@
-# MCP Dashboard - 実装計画書
+# MCP Dashboard - Implementation Plan
 
-## 1. プロジェクト構造
+## 1. Project Structure
 
 ```
 mcp-dashboard/
@@ -12,27 +12,27 @@ mcp-dashboard/
 ├── SPEC.md
 ├── IMPLEMENTATION_PLAN.md
 ├── bin/
-│   └── cli.js                 # CLI エントリーポイント
+│   └── cli.js                 # CLI entry point
 ├── src/
-│   ├── server/                # バックエンド
-│   │   ├── index.ts           # Express サーバー
+│   ├── server/                # Backend
+│   │   ├── index.ts           # Express server
 │   │   ├── routes/
-│   │   │   ├── config.ts      # 設定API
-│   │   │   └── presets.ts     # プリセットAPI
+│   │   │   ├── config.ts      # Config API
+│   │   │   └── presets.ts     # Preset API
 │   │   ├── services/
-│   │   │   ├── configManager.ts   # 設定ファイル管理
-│   │   │   ├── validator.ts       # バリデーション
-│   │   │   └── presetManager.ts   # プリセット管理
+│   │   │   ├── configManager.ts   # Config file management
+│   │   │   ├── validator.ts       # Validation
+│   │   │   └── presetManager.ts   # Preset management
 │   │   ├── utils/
-│   │   │   ├── paths.ts           # パス解決
-│   │   │   └── fileSystem.ts      # ファイル操作
+│   │   │   ├── paths.ts           # Path resolution
+│   │   │   └── fileSystem.ts      # File operations
 │   │   └── types/
-│   │       └── index.ts           # 型定義
-│   ├── client/                # フロントエンド
+│   │       └── index.ts           # Type definitions
+│   ├── client/                # Frontend
 │   │   ├── index.html
 │   │   ├── src/
-│   │   │   ├── main.tsx       # エントリーポイント
-│   │   │   ├── App.tsx        # メインコンポーネント
+│   │   │   ├── main.tsx       # Entry point
+│   │   │   ├── App.tsx        # Main component
 │   │   │   ├── components/
 │   │   │   │   ├── ServerList.tsx
 │   │   │   │   ├── ServerCard.tsx
@@ -51,98 +51,98 @@ mcp-dashboard/
 │   │   │       └── index.css
 │   │   └── vite.config.ts
 │   └── presets/
-│       └── mcpServers.json    # プリセット定義
-└── dist/                      # ビルド成果物
+│       └── mcpServers.json    # Preset definitions
+└── dist/                      # Build artifacts
     ├── server/
     └── client/
 ```
 
-## 2. 実装フェーズ
+## 2. Implementation Phases
 
-### Phase 1: プロジェクトセットアップ（1-2日）
-- [x] リポジトリ初期化
-- [x] package.json 設定
-- [x] TypeScript 設定
-- [x] ビルドツールのセットアップ
-- [x] 依存関係のインストール
+### Phase 1: Project Setup (1-2 days)
+- [x] Initialize repository
+- [x] Configure package.json
+- [x] Configure TypeScript
+- [x] Set up build tools
+- [x] Install dependencies
 
-### Phase 2: バックエンド基盤（2-3日）
-- [x] Express サーバーの基本構造
-- [x] 設定ファイルパス解決ロジック
-- [x] 設定ファイル読み込み/書き込みサービス
-- [x] バックアップ機能
-- [x] バリデーションロジック
-- [x] プリセットマネージャー
+### Phase 2: Backend Foundation (2-3 days)
+- [x] Base Express server structure
+- [x] Config file path resolution logic
+- [x] Config file read/write service
+- [x] Backup functionality
+- [x] Validation logic
+- [x] Preset manager
 
-### Phase 3: API実装（2-3日）
+### Phase 3: API Implementation (2-3 days)
 - [x] GET /api/config
 - [x] POST /api/config
 - [x] POST /api/config/validate
 - [x] GET /api/presets
 - [x] GET /api/config/path
-- [x] エラーハンドリング
-- [x] CORS設定
+- [x] Error handling
+- [x] CORS configuration
 
-### Phase 4: フロントエンド基盤（2-3日）
-- [x] React + Vite セットアップ
-- [x] TailwindCSS 設定
-- [x] ルーティング設定
-- [x] API クライアントサービス
-- [x] カスタムフック（useConfig, usePresets）
-- [x] 型定義
+### Phase 4: Frontend Foundation (2-3 days)
+- [x] React + Vite setup
+- [x] TailwindCSS configuration
+- [x] Routing configuration
+- [x] API client service
+- [x] Custom hooks (useConfig, usePresets)
+- [x] Type definitions
 
-### Phase 5: UI コンポーネント（3-4日）
-- [x] Header コンポーネント
-- [x] ServerList コンポーネント（App.tsx に統合）
-- [x] ServerCard コンポーネント
-- [x] ServerModal コンポーネント（追加/編集）
-- [x] PresetModal コンポーネント
-- [x] Toast 通知コンポーネント
-- [x] スタイリング
+### Phase 5: UI Components (3-4 days)
+- [x] Header component
+- [x] ServerList component (integrated into App.tsx)
+- [x] ServerCard component
+- [x] ServerModal component (add/edit)
+- [x] PresetModal component
+- [x] Toast notification component
+- [x] Styling
 
-### Phase 6: 機能統合（2-3日）
-- [x] CRUD 操作の実装
-- [x] プリセット選択機能
-- [x] インポート/エクスポート機能
-- [x] 設定の有効/無効切り替え
-- [x] フォームバリデーション
-- [x] エラーハンドリング
+### Phase 6: Feature Integration (2-3 days)
+- [x] CRUD operations
+- [x] Preset selection functionality
+- [x] Import/export functionality
+- [x] Enable/disable toggle
+- [x] Form validation
+- [x] Error handling
 
-### Phase 7: CLI実装（1-2日）
-- [x] CLI エントリーポイント
-- [x] コマンドラインオプション解析
-- [x] サーバー起動ロジック
-- [x] ブラウザ自動起動
-- [x] ポート管理
-- [x] シャットダウン処理
+### Phase 7: CLI Implementation (1-2 days)
+- [x] CLI entry point
+- [x] Command-line option parsing
+- [x] Server startup logic
+- [x] Automatic browser launch
+- [x] Port management
+- [x] Shutdown handling
 
-### Phase 8: テスト（2-3日）
-- [x] バックエンドユニットテスト（ConfigManager, Validator）
-- [ ] API統合テスト
-- [ ] フロントエンドコンポーネントテスト
-- [ ] E2Eテスト
-- [ ] クロスプラットフォームテスト
+### Phase 8: Testing (2-3 days)
+- [x] Backend unit tests (ConfigManager, Validator)
+- [ ] API integration tests
+- [ ] Frontend component tests
+- [ ] E2E tests
+- [ ] Cross-platform tests
 
-### Phase 9: ドキュメント & リリース準備（1-2日）
-- [x] README.md 作成
-- [x] 使用方法のドキュメント
-- [x] プリセット一覧のドキュメント
+### Phase 9: Documentation & Release Prep (1-2 days)
+- [x] Write README.md
+- [x] Usage documentation
+- [x] Preset list documentation
 - [x] CHANGELOG.md
-- [x] npm パッケージ設定
-- [x] バージョン設定
+- [x] npm package configuration
+- [x] Versioning
 
-### Phase 10: リリース（1日）
+### Phase 10: Release (1 day)
 - [ ] npm publish
-- [ ] GitHub リリース作成
-- [ ] リリースノート
+- [ ] Create GitHub release
+- [ ] Release notes
 
-**総見積もり時間: 17-26日（約3-4週間）**
+**Total estimated time: 17-26 days (about 3-4 weeks)**
 
-## 3. 詳細タスク分解
+## 3. Detailed Task Breakdown
 
-### 3.1 Phase 1: プロジェクトセットアップ
+### 3.1 Phase 1: Project Setup
 
-#### タスク 1.1: package.json 設定
+#### Task 1.1: package.json configuration
 ```json
 {
   "name": "mcp-dashboard",
@@ -169,410 +169,322 @@ mcp-dashboard/
 }
 ```
 
-#### タスク 1.2: 依存関係
+#### Task 1.2: Dependencies
 ```bash
-# バックエンド
+# Backend
 npm install express cors body-parser open chalk commander
 
-# 開発依存関係
+# Dev dependencies
 npm install -D typescript @types/node @types/express @types/cors tsx nodemon concurrently
 
-# フロントエンド
+# Frontend
 npm install react react-dom react-hook-form zod @hookform/resolvers
 
-# フロントエンド開発依存関係
+# Frontend dev dependencies
 npm install -D vite @vitejs/plugin-react tailwindcss postcss autoprefixer @types/react @types/react-dom
 
-# テスト
+# Testing
 npm install -D jest @types/jest ts-jest @testing-library/react @testing-library/jest-dom
 ```
 
-#### タスク 1.3: TypeScript設定
-- tsconfig.json（共通）
-- tsconfig.server.json（サーバー用）
-- tsconfig.client.json（クライアント用）
+#### Task 1.3: TypeScript configuration
+- tsconfig.json (shared)
+- tsconfig.server.json (server)
+- tsconfig.client.json (client)
 
-#### タスク 1.4: .gitignore
+#### Task 1.4: .gitignore
 ```
 node_modules/
 dist/
 .env
 *.log
-.DS_Store
-coverage/
-.vscode/
-*.backup.*
 ```
 
-### 3.2 Phase 2: バックエンド基盤
+### 3.2 Phase 2: Backend Foundation
 
-#### タスク 2.1: 設定ファイルパス解決
-```typescript
-// src/server/utils/paths.ts
-export function getConfigPath(): string {
-  const platform = process.platform;
-  const homeDir = process.env.HOME || process.env.USERPROFILE;
+#### Task 2.1: Config file path resolution
+- Determine default config file path (e.g., `~/.config/Claude/claude_desktop_config.json`)
+- Resolve paths across OSes
+- Provide path via API (GET /api/config/path)
+- Implement safety checks to avoid directory traversal
 
-  switch (platform) {
-    case 'darwin':
-      return path.join(homeDir, 'Library/Application Support/Claude/claude_desktop_config.json');
-    case 'win32':
-      return path.join(process.env.APPDATA, 'Claude/claude_desktop_config.json');
-    case 'linux':
-      return path.join(homeDir, '.config/Claude/claude_desktop_config.json');
-    default:
-      throw new Error(`Unsupported platform: ${platform}`);
+#### Task 2.2: Config Manager
+- Load config file
+- Save config file with validation
+- Backup existing config when overwriting
+- JSON parse/stringify with indentation
+- Handle missing file gracefully
+
+#### Task 2.3: Validator
+- Use Zod for schema validation
+- Validate `mcpServers` structure
+- Validate each server's command/args/env
+- Return detailed error messages
+
+### 3.3 Phase 3: API Implementation
+
+#### Task 3.1: Route definitions
+- `/api/config`
+  - GET: return current config
+  - POST: save config
+- `/api/config/validate`
+  - POST: validate config without saving
+- `/api/presets`
+  - GET: return preset list
+- `/api/config/path`
+  - GET: return resolved config path
+
+#### Task 3.2: Controller implementation
+- Implement handlers for each endpoint
+- Consistent error responses
+- CORS configuration (localhost only)
+
+### 3.4 Phase 4: Frontend Foundation
+
+#### Task 4.1: Vite configuration
+- React + TypeScript template
+- TailwindCSS setup
+- Proxy API requests to backend during dev
+
+#### Task 4.2: API Client
+- axios-based client
+- Methods: getConfig, saveConfig, validateConfig, getPresets, getConfigPath
+
+#### Task 4.3: Custom hooks
+- `useConfig`: fetch/save config, manage loading/error states
+- `usePresets`: fetch presets, manage selection state
+
+### 3.5 Phase 5: UI Components
+
+#### Task 5.1: Component structure
+- Header: title, actions
+- ServerList: list of server cards, add button
+- ServerCard: server info, enable/disable toggle, edit/delete buttons
+- ServerModal: form for add/edit, validation
+- PresetModal: select from presets and apply
+- Toast: notifications
+
+#### Task 5.2: ServerModal form
+- Manage form with React Hook Form
+- Validate with Zod
+- Dynamic args/env add/remove
+
+### 3.6 Phase 6: Feature Integration
+
+#### Task 6.1: CRUD workflow
+- Load config on startup
+- Add/edit/delete servers
+- Persist changes via API
+
+#### Task 6.2: Preset workflow
+- Load presets
+- Apply selected preset to form
+- Merge with existing config
+
+#### Task 6.3: Import/export
+- Import config file (JSON)
+- Export current config as JSON download
+
+#### Task 6.4: Enable/disable toggle
+- Toggle `disabled` flag per server
+
+### 3.7 Phase 7: CLI Implementation
+
+#### Task 7.1: CLI entry
+- `#!/usr/bin/env node`
+- Options: `--port`, `--open`, `--config-path`
+- Start backend server and Vite build output
+- Auto-open browser (use `open`)
+- Graceful shutdown (handle SIGINT)
+
+### 3.8 Phase 8: Testing
+
+#### Task 8.1: Backend unit tests
+- ConfigManager: load/save/backup
+- Validator: valid/invalid cases
+
+#### Task 8.2: Integration tests
+- API endpoints
+- Mock file system as needed
+
+#### Task 8.3: Frontend tests
+- Component rendering
+- Form validation behavior
+
+#### Task 8.4: E2E
+- Simulate adding/editing/deleting servers
+- Validate config download/upload
+
+### 3.9 Phase 9: Documentation & Release Prep
+- Update README with usage and screenshots
+- Document presets (`src/presets/mcpServers.json`)
+- Update CHANGELOG for each milestone
+- Prepare npm metadata
+
+### 3.10 Phase 10: Release
+- Build client and server
+- Publish to npm
+- Create GitHub release and notes
+
+## 4. UI/UX Specification
+
+### 4.1 Layout
+
+| Layout element          | Description                                         |
+|-------------------------|-----------------------------------------------------|
+| Header                  | Title, open config button, import/export buttons    |
+| Main content (left)     | MCP server list (cards)                             |
+| Main content (right)    | Add/edit modal, preset modal, toast notifications   |
+| Footer                  | Config file path: ~/.config/Claude/claude_...       |
+
+### 4.2 Screens
+
+#### 4.2.1 Main screen
+- MCP server list
+- Enable/disable state per server
+- Add/edit/delete buttons
+
+#### 4.2.2 Add/Edit modal
+- Fields: name, description, command, args[], env{}, disabled
+- Validation errors shown inline
+- Use presets button
+
+#### 4.2.3 Preset selection modal
+- Filterable preset list
+- Apply to form and close
+- Preview preset details
+
+### 4.3 Color scheme
+- Primary: Blue (#3B82F6)
+- Secondary: Gray (#6B7280)
+- Success: Green (#10B981)
+- Warning: Yellow (#F59E0B)
+- Error: Red (#EF4444)
+- Background: White/Light Gray
+- Text: Dark Gray (#1F2937)
+
+### 4.4 Responsive design
+- Desktop-first (min width 1024px recommended)
+- Tablet support (768px and up)
+
+## 5. API Specification
+
+### 5.1 REST API Endpoints
+
+#### 5.1.1 Get config
+- **GET /api/config**
+- Returns current MCP config JSON
+
+#### 5.1.2 Save config
+- **POST /api/config**
+- Validates and saves provided config
+- Returns saved config
+
+#### 5.1.3 Validate config
+- **POST /api/config/validate**
+- Validates without saving
+- Returns validation result
+
+#### 5.1.4 Get presets
+- **GET /api/presets**
+- Returns available presets
+
+#### 5.1.5 Get config path
+- **GET /api/config/path**
+- Returns resolved config path
+
+#### 5.1.6 Connection test
+- **GET /health** (optional)
+
+## 6. Data Structures
+
+### 6.1 MCP config file format (Claude Desktop Config)
+```json
+{
+  "mcpServers": {
+    "server-name": {
+      "command": "string",
+      "args": ["string"],
+      "env": {
+        "KEY": "VALUE"
+      },
+      "disabled": false,
+      "description": "string"
+    }
   }
 }
 ```
 
-#### タスク 2.2: 設定マネージャー
-```typescript
-// src/server/services/configManager.ts
-export class ConfigManager {
-  async loadConfig(): Promise<MCPConfig>
-  async saveConfig(config: MCPConfig): Promise<void>
-  async backupConfig(): Promise<string>
-  async validateConfig(config: MCPConfig): Promise<ValidationResult>
+### 6.2 Internal data model
+```ts
+interface MCPConfig {
+  mcpServers: Record<string, {
+    command: string;
+    args?: string[];
+    env?: Record<string, string>;
+    disabled?: boolean;
+    description?: string;
+  }>;
 }
 ```
 
-#### タスク 2.3: バリデーター
-```typescript
-// src/server/services/validator.ts
-export class Validator {
-  validateMCPConfig(config: MCPConfig): ValidationResult
-  validateServerConfig(server: MCPServer): ValidationResult
-  validateCommand(command: string): boolean
-  validateEnvVars(env: Record<string, string>): ValidationResult
-}
-```
+## 7. Security Requirements
 
-### 3.3 Phase 3: API実装
+### 7.1 File access
+- Config file access limited to read/write
+- Prevent path traversal
+- Check appropriate file permissions
 
-#### タスク 3.1: ルート定義
-```typescript
-// src/server/routes/config.ts
-router.get('/config', getConfig);
-router.post('/config', saveConfig);
-router.post('/config/validate', validateConfig);
-router.get('/config/path', getConfigPath);
+### 7.2 Input validation
+- Prevent command injection
+- Sanitize environment variable values
+- Strict JSON structure validation
 
-// src/server/routes/presets.ts
-router.get('/presets', getPresets);
-```
+### 7.3 Localhost only
+- Web server listens on localhost only
+- No external network access
 
-#### タスク 3.2: コントローラー実装
-- 各エンドポイントのハンドラー実装
-- エラーハンドリング
-- レスポンス形式の統一
+## 8. Error Handling
 
-### 3.4 Phase 4: フロントエンド基盤
+### 8.1 Error cases
+- Config file does not exist
+- Config file read error
+- JSON parse error
+- Config file write error
+- Invalid MCP config
+- Port conflict
 
-#### タスク 4.1: Vite設定
-```typescript
-// src/client/vite.config.ts
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-      },
-    },
-  },
-  build: {
-    outDir: '../../dist/client',
-  },
-});
-```
+### 8.2 Error display
+- Show toast notifications
+- Log details to console
+- User-friendly error messages
 
-#### タスク 4.2: APIクライアント
-```typescript
-// src/client/src/services/api.ts
-export const api = {
-  getConfig: () => fetch('/api/config').then(r => r.json()),
-  saveConfig: (config) => fetch('/api/config', {...}).then(r => r.json()),
-  validateConfig: (config) => fetch('/api/config/validate', {...}),
-  getPresets: () => fetch('/api/presets').then(r => r.json()),
-  getConfigPath: () => fetch('/api/config/path').then(r => r.json()),
-};
-```
+## 9. Performance Requirements
+- Web server startup: within 3 seconds
+- Browser launch: immediately after server start
+- UI response: within 100ms
+- Config save: within 1 second
 
-#### タスク 4.3: カスタムフック
-```typescript
-// src/client/src/hooks/useConfig.ts
-export function useConfig() {
-  const [config, setConfig] = useState<MCPConfig | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+## 10. Compatibility
 
-  const loadConfig = async () => { ... };
-  const saveConfig = async (newConfig: MCPConfig) => { ... };
+### 10.1 OS compatibility
+- macOS (10.15 or later)
+- Windows (10 or later)
+- Linux (major distributions)
 
-  return { config, loading, error, loadConfig, saveConfig };
-}
-```
+### 10.2 Node.js version
+- Node.js 18.x or later
 
-### 3.5 Phase 5: UIコンポーネント
+### 10.3 Browser compatibility
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
 
-#### タスク 5.1: コンポーネント構造
-各コンポーネントに以下を実装:
-- Props 型定義
-- State 管理
-- イベントハンドラー
-- レンダリングロジック
-- スタイリング（TailwindCSS）
-
-#### タスク 5.2: ServerModal フォーム
-- React Hook Form でフォーム管理
-- Zod でバリデーション
-- 動的な引数/環境変数の追加/削除
-
-### 3.6 Phase 6: 機能統合
-
-#### タスク 6.1: CRUD操作フロー
-1. サーバー追加: UI → バリデーション → API → ファイル保存 → UI更新
-2. サーバー編集: 同上
-3. サーバー削除: UI → 確認ダイアログ → API → UI更新
-4. 有効/無効切り替え: UI → API → UI更新
-
-#### タスク 6.2: インポート/エクスポート
-- JSON ファイルのダウンロード
-- JSON ファイルのアップロードと検証
-
-### 3.7 Phase 7: CLI実装
-
-#### タスク 7.1: CLIエントリーポイント
-```typescript
-#!/usr/bin/env node
-import { Command } from 'commander';
-import { startServer } from '../server';
-import open from 'open';
-import chalk from 'chalk';
-
-const program = new Command();
-
-program
-  .name('mcp-dashboard')
-  .description('GUI tool for managing Claude Code MCP settings')
-  .option('-p, --port <port>', 'Port number', '3000')
-  .option('--no-open', 'Do not open browser automatically')
-  .action(async (options) => {
-    const port = parseInt(options.port);
-    await startServer(port);
-
-    console.log(chalk.green('MCP Setting Tool started!'));
-    console.log(chalk.blue(`Server running at http://localhost:${port}`));
-
-    if (options.open) {
-      await open(`http://localhost:${port}`);
-    }
-  });
-
-program.parse();
-```
-
-#### タスク 7.2: サーバー起動ロジック
-- ポートの可用性チェック
-- Graceful shutdown
-- エラーハンドリング
-
-### 3.8 Phase 8: テスト
-
-#### タスク 8.1: バックエンドテスト
-```typescript
-describe('ConfigManager', () => {
-  test('should load config file', async () => { ... });
-  test('should save config file', async () => { ... });
-  test('should create backup', async () => { ... });
-  test('should validate config', async () => { ... });
-});
-```
-
-#### タスク 8.2: フロントエンドテスト
-```typescript
-describe('ServerModal', () => {
-  test('should render form', () => { ... });
-  test('should validate input', () => { ... });
-  test('should submit form', async () => { ... });
-});
-```
-
-#### タスク 8.3: E2Eテスト
-- Playwright or Cypress を使用
-- ユーザーフロー全体のテスト
-
-## 4. 技術的な考慮事項
-
-### 4.1 設定ファイルの並行アクセス
-- ファイルロック機構の実装
-- 楽観的ロックまたは悲観的ロック
-
-### 4.2 エラーリカバリー
-- バックアップからの復元機能
-- 不正な設定の検出と修正
-
-### 4.3 パフォーマンス最適化
-- 設定ファイルのキャッシング
-- デバウンス処理
-- 遅延ロード
-
-### 4.4 セキュリティ
-- CSRF対策（localhost限定なので優先度低）
-- パストラバーサル対策
-- コマンドインジェクション対策
-
-### 4.5 クロスプラットフォーム対応
-- パス区切り文字の処理
-- 環境変数の違い
-- ファイルパーミッション
-
-## 5. プリセット定義
-
-```json
-{
-  "presets": [
-    {
-      "id": "filesystem",
-      "name": "Filesystem MCP",
-      "description": "Access local files and directories",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/directory"]
-      }
-    },
-    {
-      "id": "git",
-      "name": "Git MCP",
-      "description": "Git repository operations",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-git", "--repository", "/path/to/repo"]
-      }
-    },
-    {
-      "id": "github",
-      "name": "GitHub MCP",
-      "description": "GitHub API integration",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-github"],
-        "env": {
-          "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-token>"
-        }
-      }
-    },
-    {
-      "id": "brave-search",
-      "name": "Brave Search MCP",
-      "description": "Web search capabilities",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-brave-search"],
-        "env": {
-          "BRAVE_API_KEY": "<your-api-key>"
-        }
-      }
-    }
-  ]
-}
-```
-
-## 6. リリースチェックリスト
-
-### 6.1 コード品質
-- [x] すべてのテストがパス（39テスト成功）
-- [x] Lintエラーなし
-- [x] 型エラーなし
-- [x] セキュリティ脆弱性チェック（npm audit）- 開発依存関係のみ2件の中程度の脆弱性
-
-### 6.2 ドキュメント
-- [x] README.md が完成
-- [x] インストール手順が明確
-- [x] 使用例が記載されている
-- [x] トラブルシューティングガイド
-- [x] CHANGELOG.md が更新されている
-
-### 6.3 パッケージング
-- [x] package.json が正しく設定されている
-- [x] .npmignore が適切
-- [x] bin フィールドが正しい
-- [x] バージョン番号が適切
-
-### 6.4 動作確認
-- [ ] macOS で動作確認
-- [ ] Windows で動作確認
-- [ ] Linux で動作確認（開発環境はLinux）
-- [ ] npx 経由での実行確認
-- [ ] グローバルインストール確認
-
-### 6.5 npm公開
-- [ ] npm アカウント作成
-- [ ] npm login
-- [ ] npm publish --dry-run でチェック
-- [ ] npm publish で公開
-- [ ] 公開後の動作確認（npx mcp-dashboard）
-
-## 7. メンテナンス計画
-
-### 7.1 バージョニング戦略
-- セマンティックバージョニング (SemVer) を採用
-- MAJOR: 破壊的変更
-- MINOR: 機能追加
-- PATCH: バグ修正
-
-### 7.2 イシュー管理
-- GitHub Issues でバグ報告・機能リクエストを管理
-- ラベルで分類（bug, enhancement, documentation, etc.）
-
-### 7.3 継続的改善
-- ユーザーフィードバックの収集
-- パフォーマンス監視
-- セキュリティアップデート
-- 依存関係の更新
-
-## 8. 成功指標
-
-### 8.1 機能的指標
-- すべての主要機能が動作
-- クロスプラットフォーム対応完了
-- エラーハンドリングが適切
-
-### 8.2 品質指標
-- テストカバレッジ 80% 以上
-- Lint/型エラー 0
-- セキュリティ脆弱性 0
-
-### 8.3 ユーザビリティ指標
-- 直感的なUI
-- 明確なエラーメッセージ
-- 充実したドキュメント
-
-## 9. リスクと対策
-
-### 9.1 リスク
-1. **設定ファイル形式の変更**: Claude側で設定ファイル形式が変更される可能性
-2. **プラットフォーム依存**: 異なるOSでの動作差異
-3. **セキュリティ**: ローカルファイル操作のセキュリティリスク
-4. **ブラウザ起動失敗**: 特定環境でブラウザが起動しない
-
-### 9.2 対策
-1. バージョン管理とマイグレーション機能
-2. 十分なクロスプラットフォームテスト
-3. 厳格なバリデーションとサニタイゼーション
-4. フォールバック処理とマニュアルアクセス手順の提供
-
-## 10. 次のステップ
-
-1. **Phase 1の開始**: プロジェクトセットアップ
-2. **開発環境の構築**: 必要なツールのインストール
-3. **基本構造の実装**: サーバーとクライアントの骨組み
-4. **反復的な開発**: フェーズごとに実装・テスト・レビュー
-5. **ベータリリース**: 限定的なユーザーでのテスト
-6. **正式リリース**: npm への公開
+## 11. Future Enhancements
+- MCP server status monitoring
+- Real-time log viewer
+- Config sync (cloud integration)
+- Custom preset creation and sharing
+- Multiple profile support
+- Dark mode
+- Localization support

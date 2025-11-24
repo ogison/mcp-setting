@@ -11,14 +11,14 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
   const [error, setError] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
 
-  // configが変更されたらjsonTextを更新（外部から変更された場合）
+  // Update jsonText when config changes (for external updates)
   useEffect(() => {
     if (!isDirty) {
       setJsonText(JSON.stringify(config, null, 2));
     }
   }, [config, isDirty]);
 
-  // 初期表示時にjsonTextを設定
+  // Initialize jsonText for first render
   useEffect(() => {
     setJsonText(JSON.stringify(config, null, 2));
   }, []);
@@ -28,40 +28,38 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
     setJsonText(newText);
     setIsDirty(true);
 
-    // リアルタイムバリデーション
+    // Real-time validation
     try {
       const parsed = JSON.parse(newText);
 
-      // 基本的な構造チェック
+      // Basic structure checks
       if (!parsed.mcpServers || typeof parsed.mcpServers !== "object") {
-        setError('設定には "mcpServers" オブジェクトが必要です');
+        setError('Config requires a "mcpServers" object');
         return;
       }
 
-      // 各サーバーの構造チェック
+      // Validate each server entry
       for (const [serverName, serverConfig] of Object.entries(
         parsed.mcpServers,
       )) {
         if (typeof serverConfig !== "object" || serverConfig === null) {
-          setError(`サーバー "${serverName}" の設定が無効です`);
+          setError(`Server "${serverName}" has an invalid configuration`);
           return;
         }
 
         const server = serverConfig as any;
         if (!server.command || typeof server.command !== "string") {
-          setError(`サーバー "${serverName}" にはcommandが必要です`);
+          setError(`Server "${serverName}" needs a command`);
           return;
         }
 
         if (server.args && !Array.isArray(server.args)) {
-          setError(`サーバー "${serverName}" のargsは配列である必要があります`);
+          setError(`Server "${serverName}" requires args to be an array`);
           return;
         }
 
         if (server.env && typeof server.env !== "object") {
-          setError(
-            `サーバー "${serverName}" のenvはオブジェクトである必要があります`,
-          );
+          setError(`Server "${serverName}" requires env to be an object`);
           return;
         }
       }
@@ -70,9 +68,9 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
       onChange(parsed as MCPConfig);
     } catch (e) {
       if (e instanceof SyntaxError) {
-        setError(`JSON構文エラー: ${e.message}`);
+        setError(`JSON syntax error: ${e.message}`);
       } else {
-        setError("不明なエラーが発生しました");
+        setError("An unknown error occurred");
       }
     }
   };
@@ -85,7 +83,7 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
       setError(null);
     } catch (e) {
       if (e instanceof SyntaxError) {
-        setError(`フォーマットできません: ${e.message}`);
+        setError(`Unable to format: ${e.message}`);
       }
     }
   };
@@ -103,21 +101,21 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
           onClick={handleFormat}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
         >
-          フォーマット
+          Format
         </button>
         {isDirty && (
           <button
             onClick={handleReset}
             className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
           >
-            リセット
+            Reset
           </button>
         )}
       </div>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-          <p className="font-semibold">エラー</p>
+          <p className="font-semibold">Error</p>
           <p className="text-sm">{error}</p>
         </div>
       )}
@@ -133,13 +131,14 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
       </div>
 
       <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded">
-        <p className="font-semibold mb-2">ヒント:</p>
+        <p className="font-semibold mb-2">Tips:</p>
         <ul className="list-disc list-inside space-y-1">
-          <li>JSON形式で設定を直接編集できます</li>
+          <li>You can edit the config directly in JSON format</li>
           <li>
-            保存するには画面下部の「変更を保存」ボタンをクリックしてください
+            Click the "Save changes" button at the bottom of the page to save
+            your updates
           </li>
-          <li>「フォーマット」ボタンで整形できます</li>
+          <li>Use the "Format" button to tidy the JSON</li>
         </ul>
       </div>
     </div>
