@@ -4,6 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  publicDir: path.resolve(__dirname, "../images"),
   server: {
     port: 5173,
     proxy: {

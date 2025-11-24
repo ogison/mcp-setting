@@ -1,19 +1,39 @@
 import express, { Request, Response } from "express";
 import { ConfigManager } from "../services/configManager.js";
-import { getConfigPath } from "../utils/paths.js";
-import { fileExists } from "../utils/fileSystem.js";
 import type {
   MCPConfig,
+  ClaudeUserConfig,
   ApiResponse,
   ConfigPathResponse,
+  ConfigInfoResponse,
+  ConfigScope,
 } from "../types/index.js";
 
 const router = express.Router();
 const configManager = new ConfigManager();
 
-router.get("/config", async (_req: Request, res: Response) => {
+const validScopes: ConfigScope[] = ["project", "user", "claude-desktop"];
+
+function parseScope(scope?: string): ConfigScope | undefined {
+  if (!scope) return undefined;
+  if (validScopes.includes(scope as ConfigScope)) {
+    return scope as ConfigScope;
+  }
+  return undefined;
+}
+
+router.get("/config", async (req: Request, res: Response) => {
   try {
-    const config = await configManager.loadConfig();
+    const scope = parseScope(req.query.scope as string | undefined);
+    if (req.query.scope && !scope) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid scope parameter",
+      } as ApiResponse);
+      return;
+    }
+
+    const config = await configManager.loadConfig(scope);
     res.json(config);
   } catch (error) {
     console.error("Error loading config:", error);
@@ -24,11 +44,45 @@ router.get("/config", async (_req: Request, res: Response) => {
   }
 });
 
+// Load full config (including non-mcpServers fields)
+router.get("/config/full", async (req: Request, res: Response) => {
+  try {
+    const scope = parseScope(req.query.scope as string | undefined);
+    if (req.query.scope && !scope) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid scope parameter",
+      } as ApiResponse);
+      return;
+    }
+
+    const config = await configManager.loadFullConfig(scope);
+    res.json(config);
+  } catch (error) {
+    console.error("Error loading full config:", error);
+    res.status(500).json({
+      success: false,
+      message: `Failed to load full config: ${(error as Error).message}`,
+    } as ApiResponse);
+  }
+});
+
 router.post("/config", async (req: Request, res: Response) => {
   try {
-    const config: MCPConfig = req.body;
+    const scope = parseScope(req.query.scope as string | undefined);
+    if (req.query.scope && !scope) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid scope parameter",
+      } as ApiResponse);
+      return;
+    }
 
-    const validationResult = configManager.validateConfig(config);
+    const config: MCPConfig | ClaudeUserConfig = req.body;
+
+    const validationResult = configManager.validateConfig({
+      mcpServers: config.mcpServers,
+    });
     if (!validationResult.valid) {
       res.status(400).json({
         success: false,
@@ -38,7 +92,7 @@ router.post("/config", async (req: Request, res: Response) => {
       return;
     }
 
-    await configManager.saveConfig(config);
+    await configManager.saveConfig(config, scope);
 
     res.json({
       success: true,
@@ -53,25 +107,43 @@ router.post("/config", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/config/validate", async (req: Request, res: Response) => {
+// Get active config information (path, scope, all locations)
+router.get("/config/info", async (req: Request, res: Response) => {
   try {
-    const config: MCPConfig = req.body;
-    const validationResult = configManager.validateConfig(config);
+    const scope = parseScope(req.query.scope as string | undefined);
+    if (req.query.scope && !scope) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid scope parameter",
+      } as ApiResponse);
+      return;
+    }
 
-    res.json(validationResult);
+    const info = await configManager.getActiveConfigInfo(scope);
+    res.json(info satisfies ConfigInfoResponse);
   } catch (error) {
-    console.error("Error validating config:", error);
+    console.error("Error getting config info:", error);
     res.status(500).json({
-      valid: false,
-      errors: [`Validation error: ${(error as Error).message}`],
-    });
+      success: false,
+      message: `Failed to get config info: ${(error as Error).message}`,
+    } as ApiResponse);
   }
 });
 
-router.get("/config/path", async (_req: Request, res: Response) => {
+// Legacy endpoint for backward compatibility
+router.get("/config/path", async (req: Request, res: Response) => {
   try {
-    const path = getConfigPath();
-    const exists = await fileExists(path);
+    const scope = parseScope(req.query.scope as string | undefined);
+    if (req.query.scope && !scope) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid scope parameter",
+      } as ApiResponse);
+      return;
+    }
+
+    const path = await configManager.getConfigPath(scope);
+    const exists = await configManager.configExists(scope);
 
     res.json({
       path,
