@@ -1,5 +1,9 @@
 # MCP Dashboard
 
+<p align="center">
+  <img src="src/images/icon.png" alt="MCP Dashboard icon" width="128">
+</p>
+
 A GUI dashboard for managing Claude Code and Claude Desktop MCP (Model Context Protocol) settings through a user-friendly web interface.
 
 ## Features

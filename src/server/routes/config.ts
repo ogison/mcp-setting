@@ -80,7 +80,9 @@ router.post("/config", async (req: Request, res: Response) => {
 
     const config: MCPConfig | ClaudeUserConfig = req.body;
 
-    const validationResult = configManager.validateConfig({ mcpServers: config.mcpServers });
+    const validationResult = configManager.validateConfig({
+      mcpServers: config.mcpServers,
+    });
     if (!validationResult.valid) {
       res.status(400).json({
         success: false,

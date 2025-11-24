@@ -10,6 +10,7 @@
   "files": [
     "bin/",
     "dist/",
+    "src/images/icon.png",
     "README.md",
     "LICENSE"
   ],

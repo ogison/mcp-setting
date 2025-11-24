@@ -113,7 +113,6 @@ function App() {
     }
   };
 
-
   const handlePresetSelect = (preset: Preset) => {
     const baseName = preset.id;
     let serverName = baseName;
@@ -176,10 +175,12 @@ function App() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
 
-          {activeTab === 'list' ? (
+          {activeTab === "list" ? (
             <>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">MCP Servers</h2>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  MCP Servers
+                </h2>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setIsPresetModalOpen(true)}
@@ -219,12 +220,7 @@ function App() {
               )}
             </>
           ) : (
-            config && (
-              <JsonEditor
-                config={config}
-                onChange={handleJsonChange}
-              />
-            )
+            config && <JsonEditor config={config} onChange={handleJsonChange} />
           )}
         </div>
 

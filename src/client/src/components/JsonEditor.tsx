@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { MCPConfig } from '../types';
+import React, { useState, useEffect } from "react";
+import { MCPConfig } from "../types";
 
 interface JsonEditorProps {
   config: MCPConfig;
@@ -7,7 +7,7 @@ interface JsonEditorProps {
 }
 
 export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
-  const [jsonText, setJsonText] = useState('');
+  const [jsonText, setJsonText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
 
@@ -33,20 +33,22 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
       const parsed = JSON.parse(newText);
 
       // 基本的な構造チェック
-      if (!parsed.mcpServers || typeof parsed.mcpServers !== 'object') {
+      if (!parsed.mcpServers || typeof parsed.mcpServers !== "object") {
         setError('設定には "mcpServers" オブジェクトが必要です');
         return;
       }
 
       // 各サーバーの構造チェック
-      for (const [serverName, serverConfig] of Object.entries(parsed.mcpServers)) {
-        if (typeof serverConfig !== 'object' || serverConfig === null) {
+      for (const [serverName, serverConfig] of Object.entries(
+        parsed.mcpServers,
+      )) {
+        if (typeof serverConfig !== "object" || serverConfig === null) {
           setError(`サーバー "${serverName}" の設定が無効です`);
           return;
         }
 
         const server = serverConfig as any;
-        if (!server.command || typeof server.command !== 'string') {
+        if (!server.command || typeof server.command !== "string") {
           setError(`サーバー "${serverName}" にはcommandが必要です`);
           return;
         }
@@ -56,8 +58,10 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
           return;
         }
 
-        if (server.env && typeof server.env !== 'object') {
-          setError(`サーバー "${serverName}" のenvはオブジェクトである必要があります`);
+        if (server.env && typeof server.env !== "object") {
+          setError(
+            `サーバー "${serverName}" のenvはオブジェクトである必要があります`,
+          );
           return;
         }
       }
@@ -68,7 +72,7 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
       if (e instanceof SyntaxError) {
         setError(`JSON構文エラー: ${e.message}`);
       } else {
-        setError('不明なエラーが発生しました');
+        setError("不明なエラーが発生しました");
       }
     }
   };
@@ -132,7 +136,9 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ config, onChange }) => {
         <p className="font-semibold mb-2">ヒント:</p>
         <ul className="list-disc list-inside space-y-1">
           <li>JSON形式で設定を直接編集できます</li>
-          <li>保存するには画面下部の「変更を保存」ボタンをクリックしてください</li>
+          <li>
+            保存するには画面下部の「変更を保存」ボタンをクリックしてください
+          </li>
           <li>「フォーマット」ボタンで整形できます</li>
         </ul>
       </div>

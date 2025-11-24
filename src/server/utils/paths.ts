@@ -192,14 +192,8 @@ export function getConfigDir(configPath?: string): string {
 export function getBackupPath(configPath: string, timestamp?: number): string {
   const ts = timestamp || Date.now();
   const date = new Date(ts);
-  const dateStr = date
-    .toISOString()
-    .replace(/[:.]/g, "-")
-    .split("T")[0];
-  const timeStr = date
-    .toTimeString()
-    .split(" ")[0]
-    .replace(/:/g, "");
+  const dateStr = date.toISOString().replace(/[:.]/g, "-").split("T")[0];
+  const timeStr = date.toTimeString().split(" ")[0].replace(/:/g, "");
   return `${configPath}.backup.${dateStr}_${timeStr}`;
 }
 

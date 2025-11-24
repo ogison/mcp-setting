@@ -62,7 +62,7 @@ export function Header({
             {configScope && (
               <span
                 className={`px-2 py-1 text-xs font-semibold rounded border ${getScopeBadgeColor(
-                  configScope
+                  configScope,
                 )}`}
               >
                 {getScopeLabel(configScope)}

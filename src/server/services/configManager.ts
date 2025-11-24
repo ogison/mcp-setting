@@ -52,7 +52,9 @@ export class ConfigManager {
   /**
    * Load full config (including non-mcpServers fields for user config)
    */
-  async loadFullConfig(scope?: ConfigScope): Promise<ClaudeUserConfig | MCPConfig> {
+  async loadFullConfig(
+    scope?: ConfigScope,
+  ): Promise<ClaudeUserConfig | MCPConfig> {
     const configPath = await getConfigPath(undefined, scope);
     const exists = await fileExists(configPath);
 
@@ -77,7 +79,9 @@ export class ConfigManager {
     scope?: ConfigScope,
   ): Promise<void> {
     // Validate mcpServers
-    const validationResult = this.validateConfig({ mcpServers: config.mcpServers });
+    const validationResult = this.validateConfig({
+      mcpServers: config.mcpServers,
+    });
     if (!validationResult.valid) {
       throw new Error(`Invalid config: ${validationResult.errors.join(", ")}`);
     }
@@ -161,11 +165,11 @@ export class ConfigManager {
       return {
         path: location.path,
         exists: location.exists,
-      scope: location.scope,
-      displayName: location.displayName,
-      allLocations,
-    };
-  }
+        scope: location.scope,
+        displayName: location.displayName,
+        allLocations,
+      };
+    }
 
     // No config exists, return user config as default
     const defaultLocation = allLocations.find((loc) => loc.scope === "user");
