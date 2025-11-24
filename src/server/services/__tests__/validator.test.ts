@@ -88,7 +88,7 @@ describe("Validator", () => {
       const result = validator.validateServerConfig(server);
       expect(result.valid).toBe(false);
       expect(result.errors.some((e) => e.includes("Command is required"))).toBe(
-        true
+        true,
       );
     });
 
@@ -111,7 +111,7 @@ describe("Validator", () => {
       const result = validator.validateServerConfig(server);
       expect(result.valid).toBe(false);
       expect(result.errors.some((e) => e.includes("must be a string"))).toBe(
-        true
+        true,
       );
     });
 
@@ -124,7 +124,7 @@ describe("Validator", () => {
       const result = validator.validateServerConfig(server);
       expect(result.valid).toBe(false);
       expect(result.errors.some((e) => e.includes("must be an array"))).toBe(
-        true
+        true,
       );
     });
 
@@ -152,7 +152,7 @@ describe("Validator", () => {
       const result = validator.validateServerConfig(server);
       expect(result.valid).toBe(false);
       expect(
-        result.errors.some((e) => e.includes("Disabled must be a boolean"))
+        result.errors.some((e) => e.includes("Disabled must be a boolean")),
       ).toBe(true);
     });
 
@@ -217,7 +217,7 @@ describe("Validator", () => {
       const result = validator.validateEnvVars(null as any);
       expect(result.valid).toBe(false);
       expect(result.errors.some((e) => e.includes("must be an object"))).toBe(
-        true
+        true,
       );
     });
 
@@ -230,7 +230,7 @@ describe("Validator", () => {
       const result = validator.validateEnvVars(env);
       expect(result.valid).toBe(false);
       expect(result.errors.some((e) => e.includes("must be a string"))).toBe(
-        true
+        true,
       );
     });
 
