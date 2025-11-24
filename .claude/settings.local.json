@@ -13,7 +13,10 @@
       "mcp__serena__check_onboarding_performed",
       "mcp__serena__activate_project",
       "mcp__serena__get_symbols_overview",
-      "mcp__serena__write_memory"
+      "mcp__serena__write_memory",
+      "Bash(npm run dev:*)",
+      "Bash(tasklist:*)",
+      "Bash(netstat:*)"
     ],
     "deny": [],
     "ask": []
