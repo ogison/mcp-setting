@@ -1,109 +1,109 @@
-# MCP Dashboard - 仕様書
+# MCP Dashboard - Specification
 
-## 1. プロジェクト概要
+## 1. Project Overview
 
-### 1.1 目的
-Claude CodeのModel Context Protocol (MCP)設定を、ブラウザベースのGUIを通じて簡単に設定・管理できるnpmパッケージを提供する。
+### 1.1 Goal
+Provide an npm package that lets users configure and manage Claude Code Model Context Protocol (MCP) settings through a browser-based GUI.
 
-### 1.2 ターゲットユーザー
-- Claude Codeを使用する開発者
-- MCP設定をGUIで管理したいユーザー
-- 複数のMCPサーバーを効率的に管理したいユーザー
+### 1.2 Target Users
+- Developers using Claude Code
+- Users who want to manage MCP settings with a GUI
+- Users who need to manage multiple MCP servers efficiently
 
-### 1.3 プロジェクト名
+### 1.3 Project Name
 `mcp-dashboard`
 
-## 2. 機能要件
+## 2. Functional Requirements
 
-### 2.1 コア機能
+### 2.1 Core Features
 
-#### 2.1.1 コマンドライン起動
+#### 2.1.1 Command-line launch
 ```bash
 npx mcp-dashboard
 ```
-- Web サーバーを起動
-- デフォルトブラウザを自動的に開く
-- ランダムまたは指定可能なポートを使用
+- Start the web server
+- Automatically open the default browser
+- Use a random or user-specified port
 
-#### 2.1.2 MCP設定の読み込み
-- Claude Codeの設定ファイルを自動検出
+#### 2.1.2 Load MCP settings
+- Auto-detect Claude Code config file
   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
   - Windows: `%APPDATA%/Claude/claude_desktop_config.json`
   - Linux: `~/.config/Claude/claude_desktop_config.json`
-- 既存のMCP設定を読み込んで表示
+- Load and display existing MCP settings
 
-#### 2.1.3 MCP設定の編集
-- MCPサーバーの追加
-  - サーバー名
-  - コマンド
-  - 引数（配列）
-  - 環境変数（オプション）
-- MCPサーバーの編集
-- MCPサーバーの削除
-- MCPサーバーの有効/無効切り替え
+#### 2.1.3 Edit MCP settings
+- Add MCP servers
+  - Server name
+  - Command
+  - Args (array)
+  - Environment variables (optional)
+- Edit MCP servers
+- Delete MCP servers
+- Enable/disable MCP servers
 
-#### 2.1.4 設定の保存
-- バリデーション機能
-  - JSON構文チェック
-  - 必須フィールドの確認
-  - コマンドの実行可能性チェック（オプション）
-- バックアップ機能
-  - 保存前に既存設定を自動バックアップ
-  - バックアップファイル: `claude_desktop_config.json.backup.[timestamp]`
-- 設定ファイルへの書き込み
+#### 2.1.4 Save settings
+- Validation
+  - JSON syntax check
+  - Required field checks
+  - Optional: check if command is executable
+- Backup
+  - Automatically back up existing settings before saving
+  - Backup file: `claude_desktop_config.json.backup.[timestamp]`
+- Write to config file
 
-#### 2.1.5 プリセット機能
-- よく使われるMCPサーバーのプリセット提供
+#### 2.1.5 Presets
+- Provide presets for commonly used MCP servers
   - Filesystem MCP
   - Git MCP
   - GitHub MCP
   - Brave Search MCP
-  - その他の公式MCPサーバー
-- プリセットからのワンクリック追加
+  - Other official MCP servers
+- One-click add from presets
 
-### 2.2 追加機能
+### 2.2 Additional Features
 
-#### 2.2.1 設定のインポート/エクスポート
-- JSON形式でのエクスポート
-- JSON形式でのインポート
-- 設定の共有を容易にする
+#### 2.2.1 Import/Export settings
+- Export as JSON
+- Import from JSON
+- Make sharing settings easy
 
-#### 2.2.2 接続テスト
-- MCPサーバーへの接続テスト機能
-- エラーメッセージの表示
+#### 2.2.2 Connection test
+- Test connectivity to an MCP server
+- Display error messages
 
-#### 2.2.3 ログビューア
-- MCPサーバーのログ表示（将来的な拡張）
+#### 2.2.3 Log viewer
+- Show MCP server logs (future enhancement)
 
-## 3. 技術スタック
+## 3. Tech Stack
 
-### 3.1 バックエンド
-- **Node.js**: v18以上
-- **Express**: Webサーバーフレームワーク
-- **TypeScript**: 型安全な開発
+### 3.1 Backend
+- **Node.js**: v18+
+- **Express**: web server framework
+- **TypeScript**: type-safe development
 
-### 3.2 フロントエンド
-- **React**: UIライブラリ
-- **Vite**: ビルドツール
-- **TailwindCSS**: スタイリング
-- **React Hook Form**: フォーム管理
-- **Zod**: バリデーション
+### 3.2 Frontend
+- **React**: UI library
+- **Vite**: build tool
+- **TailwindCSS**: styling
+- **React Hook Form**: form management
+- **Zod**: validation
 
-### 3.3 その他
-- **open**: ブラウザ自動起動
-- **commander**: CLIオプション解析
-- **chalk**: カラフルなコンソール出力
+### 3.3 Others
+- **open**: auto-launch browser
+- **commander**: CLI option parsing
+- **chalk**: colored console output
 
-## 4. UI/UX仕様
+## 4. UI/UX Specification
 
-### 4.1 レイアウト構成
+### 4.1 Layout
 
 ```
 +--------------------------------------------------+
 |  MCP Dashboard                 [Import] [Export] |
 +--------------------------------------------------+
 |                                                  |
-|  設定ファイルパス: ~/.config/Claude/claude_...  |
+|  Config file path: ~/.config/Claude/claude_...   |
 |                                        [Reload]  |
 |                                                  |
 |  +--------------------------------------------+  |
@@ -124,19 +124,19 @@ npx mcp-dashboard
 |  |                                            |  |
 |  +--------------------------------------------+  |
 |                                                  |
-|  [Save Changes]                   [Discard]     |
+|  [Save Changes]                   [Discard]      |
 |                                                  |
 +--------------------------------------------------+
 ```
 
-### 4.2 画面遷移
+### 4.2 Screens
 
-#### 4.2.1 メイン画面
-- MCP サーバー一覧表示
-- 各サーバーの有効/無効状態
-- 追加/編集/削除ボタン
+#### 4.2.1 Main screen
+- MCP server list
+- Enable/disable state per server
+- Add/Edit/Delete buttons
 
-#### 4.2.2 追加/編集モーダル
+#### 4.2.2 Add/Edit modal
 ```
 +----------------------------------+
 |  Add MCP Server           [x]    |
@@ -164,7 +164,7 @@ npx mcp-dashboard
 +----------------------------------+
 ```
 
-#### 4.2.3 プリセット選択モーダル
+#### 4.2.3 Preset selection modal
 ```
 +----------------------------------+
 |  Add from Preset          [x]    |
@@ -188,24 +188,24 @@ npx mcp-dashboard
 +----------------------------------+
 ```
 
-### 4.3 カラースキーム
-- プライマリ: Blue (#3B82F6)
-- セカンダリ: Gray (#6B7280)
-- 成功: Green (#10B981)
-- 警告: Yellow (#F59E0B)
-- エラー: Red (#EF4444)
-- 背景: White/Light Gray
-- テキスト: Dark Gray (#1F2937)
+### 4.3 Color Scheme
+- Primary: Blue (#3B82F6)
+- Secondary: Gray (#6B7280)
+- Success: Green (#10B981)
+- Warning: Yellow (#F59E0B)
+- Error: Red (#EF4444)
+- Background: White/Light Gray
+- Text: Dark Gray (#1F2937)
 
-### 4.4 レスポンシブデザイン
-- デスクトップ優先（最小幅: 1024px推奨）
-- タブレット対応（768px以上）
+### 4.4 Responsive Design
+- Desktop-first (recommended min width: 1024px)
+- Tablet support (768px and up)
 
-## 5. API仕様
+## 5. API Specification
 
-### 5.1 REST API エンドポイント
+### 5.1 REST API Endpoints
 
-#### 5.1.1 設定の取得
+#### 5.1.1 Get config
 ```
 GET /api/config
 Response: {
@@ -222,7 +222,7 @@ Response: {
 }
 ```
 
-#### 5.1.2 設定の保存
+#### 5.1.2 Save config
 ```
 POST /api/config
 Request: {
@@ -234,7 +234,7 @@ Response: {
 }
 ```
 
-#### 5.1.3 設定のバリデーション
+#### 5.1.3 Validate config
 ```
 POST /api/config/validate
 Request: {
@@ -246,7 +246,7 @@ Response: {
 }
 ```
 
-#### 5.1.4 プリセット一覧の取得
+#### 5.1.4 Get presets
 ```
 GET /api/presets
 Response: {
@@ -261,7 +261,7 @@ Response: {
 }
 ```
 
-#### 5.1.5 設定ファイルパスの取得
+#### 5.1.5 Get config path
 ```
 GET /api/config/path
 Response: {
@@ -270,7 +270,7 @@ Response: {
 }
 ```
 
-#### 5.1.6 接続テスト
+#### 5.1.6 Connection test
 ```
 POST /api/test/:serverName
 Response: {
@@ -279,9 +279,9 @@ Response: {
 }
 ```
 
-## 6. データ構造
+## 6. Data Structures
 
-### 6.1 MCP設定ファイル形式（Claude Desktop Config）
+### 6.1 MCP config file format (Claude Desktop Config)
 ```json
 {
   "mcpServers": {
@@ -317,7 +317,7 @@ Response: {
 }
 ```
 
-### 6.2 内部データモデル
+### 6.2 Internal data model
 ```typescript
 interface MCPServer {
   command: string;
@@ -339,65 +339,65 @@ interface Preset {
 }
 ```
 
-## 7. セキュリティ要件
+## 7. Security Requirements
 
-### 7.1 ファイルアクセス
-- 設定ファイルへのアクセスは読み取り/書き込みのみ
-- パストラバーサル攻撃の防止
-- 適切なファイルパーミッションチェック
+### 7.1 File access
+- Limit config file access to read/write
+- Prevent path traversal
+- Check appropriate file permissions
 
-### 7.2 入力バリデーション
-- コマンドインジェクション防止
-- 環境変数の値のサニタイズ
-- JSON構造の厳密なバリデーション
+### 7.2 Input validation
+- Prevent command injection
+- Sanitize environment variable values
+- Strict JSON structure validation
 
-### 7.3 ローカルホスト限定
-- Web サーバーは localhost のみでリッスン
-- 外部ネットワークからのアクセス不可
+### 7.3 Localhost only
+- Web server listens on localhost only
+- No external network access
 
-## 8. エラーハンドリング
+## 8. Error Handling
 
-### 8.1 エラーケース
-- 設定ファイルが存在しない
-- 設定ファイルの読み込みエラー
-- JSON パースエラー
-- 設定ファイルへの書き込みエラー
-- 無効なMCP設定
-- ポートの競合
+### 8.1 Error cases
+- Config file does not exist
+- Config file read error
+- JSON parse error
+- Config file write error
+- Invalid MCP config
+- Port conflict
 
-### 8.2 エラー表示
-- トースト通知でエラーメッセージ表示
-- エラーの詳細をコンソールに出力
-- ユーザーフレンドリーなエラーメッセージ
+### 8.2 Error display
+- Show toast notifications for errors
+- Output error details to the console
+- User-friendly error messages
 
-## 9. パフォーマンス要件
+## 9. Performance Requirements
 
-- Web サーバー起動時間: 3秒以内
-- ブラウザ起動: サーバー起動後即座
-- UI レスポンス: 100ms以内
-- 設定保存: 1秒以内
+- Web server startup: within 3 seconds
+- Browser launch: immediately after server start
+- UI response: within 100ms
+- Config save: within 1 second
 
-## 10. 互換性
+## 10. Compatibility
 
-### 10.1 OS互換性
-- macOS (10.15以降)
-- Windows (10以降)
-- Linux (主要ディストリビューション)
+### 10.1 OS compatibility
+- macOS (10.15 or later)
+- Windows (10 or later)
+- Linux (major distributions)
 
-### 10.2 Node.js バージョン
-- Node.js 18.x 以上
+### 10.2 Node.js version
+- Node.js 18.x or later
 
-### 10.3 ブラウザ互換性
-- Chrome/Edge (最新版)
-- Firefox (最新版)
-- Safari (最新版)
+### 10.3 Browser compatibility
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
 
-## 11. 今後の拡張案
+## 11. Future Enhancements
 
-- MCPサーバーのステータス監視
-- リアルタイムログビューア
-- 設定の同期機能（クラウド連携）
-- カスタムプリセットの作成と共有
-- 複数プロファイル対応
-- Dark Mode 対応
-- 多言語対応
+- MCP server status monitoring
+- Real-time log viewer
+- Config sync (cloud integration)
+- Custom preset creation and sharing
+- Multiple profile support
+- Dark mode
+- Localization support

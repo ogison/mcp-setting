@@ -25,7 +25,7 @@ export const TabSwitcher: React.FC<TabSwitcherProps> = ({
             }
           `}
         >
-          サーバーリスト
+          Server List
         </button>
         <button
           onClick={() => onTabChange("json")}
@@ -38,7 +38,7 @@ export const TabSwitcher: React.FC<TabSwitcherProps> = ({
             }
           `}
         >
-          JSON編集
+          JSON Editor
         </button>
       </nav>
     </div>
