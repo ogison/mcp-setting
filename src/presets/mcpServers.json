@@ -1,10 +1,57 @@
 {
   "presets": [
     {
+      "id": "context7",
+      "name": "Context7 MCP",
+      "description": "Context7 integration for advanced context management",
+      "category": "Custom",
+      "url": "https://github.com/upstash/context7",
+      "config": {
+        "command": "npx",
+        "args": ["-y", "@upstash/context7-mcp"],
+        "env": {
+          "CONTEXT7_API_KEY": "<your-api-key>"
+        }
+      }
+    },
+    {
+      "id": "serena",
+      "name": "Serena MCP",
+      "description": "Serena integration for workflow management",
+      "category": "Official",
+      "url": "https://github.com/oraios/serena",
+      "config": {
+        "command": "uvx --from git+https://github.com/oraios/serena serena start-mcp-server --help"
+      }
+    },
+    {
+      "id": "playwright",
+      "name": "Playwright MCP",
+      "description": "Browser automation with Playwright",
+      "category": "Official",
+      "url": "https://github.com/microsoft/playwright-mcp",
+      "config": {
+        "command": "npx",
+        "args": ["@playwright/mcp@latest"]
+      }
+    },
+    {
+      "id": "chrome",
+      "name": "Chrome DevTools MCP",
+      "description": "Chrome DevTools Protocol integration",
+      "category": "Official",
+      "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp?tab=readme-ov-file",
+      "config": {
+        "command": "npx",
+        "args": ["-y", "chrome-devtools-mcp@latest"]
+      }
+    },
+    {
       "id": "filesystem",
       "name": "Filesystem MCP",
       "description": "Access local files and directories",
       "category": "Official",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
       "config": {
         "command": "npx",
         "args": [
@@ -15,25 +62,11 @@
       }
     },
     {
-      "id": "git",
-      "name": "Git MCP",
-      "description": "Git repository operations",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "@modelcontextprotocol/server-git",
-          "--repository",
-          "/path/to/repo"
-        ]
-      }
-    },
-    {
       "id": "github",
       "name": "GitHub MCP",
       "description": "GitHub API integration",
       "category": "Official",
+      "url": "https://github.com/github/github-mcp-server",
       "config": {
         "command": "npx",
         "args": ["-y", "@modelcontextprotocol/server-github"],
@@ -43,122 +76,38 @@
       }
     },
     {
-      "id": "brave-search",
-      "name": "Brave Search MCP",
-      "description": "Web search capabilities",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-brave-search"],
-        "env": {
-          "BRAVE_API_KEY": "<your-api-key>"
-        }
-      }
-    },
-    {
       "id": "postgres",
       "name": "PostgreSQL MCP",
       "description": "PostgreSQL database operations",
       "category": "Official",
+      "url": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/postgres",
       "config": {
         "command": "npx",
         "args": ["-y", "@modelcontextprotocol/server-postgres"],
         "env": {
-          "POSTGRES_CONNECTION_STRING": "postgresql://user:password@localhost:5432/dbname"
+          "PGHOST": "localhost",
+          "PGPORT": "5432",
+          "PGUSER": "myuser",
+          "PGPASSWORD": "mypassword",
+          "PGDATABASE": "mydb"
         }
       }
     },
     {
       "id": "sqlite",
       "name": "SQLite MCP",
-      "description": "SQLite database operations",
+      "description": "SQLite database operations. Set the DB file path (absolute) or use ':memory:' for an in-memory database.",
       "category": "Official",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite",
       "config": {
         "command": "npx",
         "args": [
           "-y",
           "@modelcontextprotocol/server-sqlite",
-          "/path/to/database.db"
-        ]
-      }
-    },
-    {
-      "id": "puppeteer",
-      "name": "Puppeteer MCP",
-      "description": "Browser automation with Puppeteer",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
-      }
-    },
-    {
-      "id": "slack",
-      "name": "Slack MCP",
-      "description": "Slack workspace integration",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-slack"],
+          "<path/to/database.db>"
+        ],
         "env": {
-          "SLACK_BOT_TOKEN": "<your-bot-token>",
-          "SLACK_TEAM_ID": "<your-team-id>"
-        }
-      }
-    },
-    {
-      "id": "context7",
-      "name": "Context7 MCP",
-      "description": "Context7 integration for advanced context management",
-      "category": "Custom",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-context7"],
-        "env": {
-          "CONTEXT7_API_KEY": "<your-api-key>",
-          "CONTEXT7_ENDPOINT": "<your-endpoint>"
-        }
-      }
-    },
-    {
-      "id": "serena",
-      "name": "Serena MCP",
-      "description": "Serena integration for workflow management",
-      "category": "Custom",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-serena"],
-        "env": {
-          "SERENA_API_KEY": "<your-api-key>",
-          "SERENA_WORKSPACE_ID": "<your-workspace-id>"
-        }
-      }
-    },
-    {
-      "id": "playwright",
-      "name": "Playwright MCP",
-      "description": "Browser automation with Playwright",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-playwright"],
-        "env": {
-          "PLAYWRIGHT_BROWSER": "chromium"
-        }
-      }
-    },
-    {
-      "id": "chrome",
-      "name": "Chrome MCP",
-      "description": "Chrome DevTools Protocol integration",
-      "category": "Official",
-      "config": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-chrome"],
-        "env": {
-          "CHROME_EXECUTABLE_PATH": "/usr/bin/google-chrome",
-          "CHROME_HEADLESS": "true",
-          "CHROME_PORT": "9222"
+          "SQLITE_DB_PATH": "<path/to/database.db>"
         }
       }
     }
