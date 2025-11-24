@@ -33,6 +33,7 @@ export interface Preset {
   name: string;
   description: string;
   category: string;
+  url?: string;
   config: MCPServer;
 }
 
