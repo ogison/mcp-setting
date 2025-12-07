@@ -4,6 +4,7 @@ const scopeDisplayNames: Record<ConfigScope, string> = {
   project: "Project",
   "vscode-user": "VS Code User",
   cursor: "Cursor",
+  vscode: "VS Code",
   user: "User",
   "claude-desktop": "Claude Desktop",
 };
@@ -26,6 +27,8 @@ function getScopeBadgeColor(scope?: ConfigScope): string {
       return "bg-orange-100 text-orange-800 border-orange-300";
     case "cursor":
       return "bg-teal-100 text-teal-800 border-teal-300";
+    case "vscode":
+      return "bg-amber-100 text-amber-800 border-amber-300";
     case "user":
       return "bg-blue-100 text-blue-800 border-blue-300";
     case "claude-desktop":
