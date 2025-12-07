@@ -21,14 +21,14 @@ export interface ClaudeUserConfig extends MCPConfig {
 // Configuration file location and scope information
 export type ConfigScope =
   | "project"
+  | "vscode-user"
   | "cursor"
-  | "vscode"
   | "user"
   | "claude-desktop";
 export const CONFIG_SCOPES: ConfigScope[] = [
   "project",
+  "vscode-user",
   "cursor",
-  "vscode",
   "user",
   "claude-desktop",
 ];
