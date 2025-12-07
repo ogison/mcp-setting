@@ -29,7 +29,6 @@ export const CONFIG_SCOPES: ConfigScope[] = [
   "project",
   "vscode-user",
   "cursor",
-  "vscode",
   "user",
   "claude-desktop",
 ];
